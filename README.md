@@ -1,0 +1,1 @@
+Simple Node CRUD app (with the emphasis on RU) to add habitat and frequency data to a database of monsters scraped from the D&D API by Monster-Scrape (q.v.).
