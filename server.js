@@ -1,11 +1,10 @@
 const express = require("express");
 const app = express();
 
-// function log() {
-//   console.log("Server request made.");
-// }
+function log(req, res, next) {
+  console.log(new Date()+" -- Server request made.");
+  next();
+}
 
-// app.use("/", log);
-app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
-// app.get("/",(req, res) => res.send("Blah blah blah"));
+app.get("/", log, (req, res) => res.sendFile(__dirname + "/index.html"));
 app.listen(3000, () => console.log("Listening on 3000"));
