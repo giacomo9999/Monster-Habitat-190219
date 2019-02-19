@@ -4,6 +4,7 @@ const MongoClient = require("mongodb").MongoClient;
 const app = express();
 require("dotenv").config();
 const port = process.env.PORT;
+app.set("view engine", "ejs");
 
 let db;
 
@@ -23,10 +24,20 @@ function log(req, res, next) {
 }
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.get("/", log, (req, res) => res.sendFile(__dirname + "/index.html"));
+// app.get("/", log, (req, res) => res.sendFile(__dirname + "/index.html"));
+
+app.get("/", log, (req, res) => {
+  db.collection("monsters")
+    .find()
+    .toArray((err, result) => {
+      if (err) return console.log(err);
+      // renders index.ejs
+      res.render("./index.ejs", { monsters: result });
+    });
+});
 
 app.post("/monsters", (req, res) => {
-  db.collection("monsters").save(req.body, (err, result) => {
+  db.collection("monsters").insertOne(req.body, (err, result) => {
     if (err) return console.log(err);
     console.log("Saved to DB");
     res.redirect("/");
