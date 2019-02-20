@@ -51,9 +51,12 @@ app.put("/monsters", (req, res) => {
     { name: req.body.name },
     { $set: { frequency: req.body.frequency } },
     (err, result) => {
-      if (err) return res.send(err);
-      res.render("./index.ejs", { monsters: result });
+      if (err) return console.log(err);
+      console.log(
+        req.body.name + " updated with frequency " + req.body.frequency
+      );
+      res.redirect("/");
     }
   );
-  console.log("Entry updated:", req.body);
+  // console.log("Entry updated:", req.body);
 });
