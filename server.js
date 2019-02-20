@@ -24,6 +24,8 @@ function log(req, res, next) {
 }
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static("public"));
 // app.get("/", log, (req, res) => res.sendFile(__dirname + "/index.html"));
 
 app.get("/", log, (req, res) => {
@@ -42,4 +44,16 @@ app.post("/monsters", (req, res) => {
     console.log("Saved to DB");
     res.redirect("/");
   });
+});
+
+app.put("/monsters", (req, res) => {
+  db.collection("monsters").findOneAndUpdate(
+    { name: req.body.name },
+    { $set: { frequency: req.body.frequency } },
+    (err, result) => {
+      if (err) return res.send(err);
+      res.render("./index.ejs", { monsters: result });
+    }
+  );
+  console.log("Entry updated:", req.body);
 });

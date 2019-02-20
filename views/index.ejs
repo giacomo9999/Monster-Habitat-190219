@@ -8,7 +8,7 @@
   <h3>Index.ejs</h3>
 
   <ul class="monster">
-  <% for(var i=0; i<monsters.length; i++) {%>
+  <% for(var i=0; i<10; i++) {%>
     <li class="monster">
       <span><%= monsters[i].name %></span>
       <span><%= monsters[i].api_index %></span>
@@ -16,10 +16,22 @@
   <% } %>
   </ul>
 
+  <h4>Add a monster</h4>
   <form action="/monsters" method="POST">
     <input type="text" placeholder="name" name="name">
     <input type="text" placeholder="api_index" name="api_index">
     <button type="submit">Submit</button>
   </form>
+
+  <div>
+  <h4>Update a monster</h4>
+  <form action="/monsters" method="PUT">
+    <input type="text" placeholder="name" name="name">
+    <input type="text" placeholder="frequency" name="frequency">
+    <button type="update">Update</button>
+  </form>
+  </div>
+  
+
 </body>
 </html>
